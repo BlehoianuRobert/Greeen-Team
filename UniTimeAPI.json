@@ -1,0 +1,637 @@
+{
+	"info": {
+		"_postman_id": "4784683d-5151-4f35-9b48-ca94fbb9061f",
+		"name": "UniTime API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44318840",
+		"_collection_link": "https://robertblehoianu.postman.co/workspace/Robert-Blehoianu's-Workspace~55263593-30e5-4067-8773-5dc2ac44f268/collection/44318840-4784683d-5151-4f35-9b48-ca94fbb9061f?action=share&source=collection_link&creator=44318840"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"robertadmin\",\r\n  \"email\": \"robert.blehoianu@unitbv.ro\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"ADMIN\"  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"robert\",\r\n  \"password\": \"password123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/admin sau /professor sau /student",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnRhZG1pbiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc0NjAyODM3NywiZXhwIjoxNzQ2MDMxOTc3fQ.6pqZNqUr6BGLiLQ161BZ0eKOqY6xx-gPRGKENebk6Ew",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnRhZG1pbiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc0NjAyODM3NywiZXhwIjoxNzQ2MDMxOTc3fQ.6pqZNqUr6BGLiLQ161BZ0eKOqY6xx-gPRGKENebk6Ew",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnRhZG1pbiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc0NjAyODM3NywiZXhwIjoxNzQ2MDMxOTc3fQ.6pqZNqUr6BGLiLQ161BZ0eKOqY6xx-gPRGKENebk6Ew",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"newUsername\": \"robert_updated\",\r\n  \"newEmail\": \"robert.new@email.com\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/profile/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"profile",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile/change password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjAzNDc0MCwiZXhwIjoxNzQ2MDM4MzQwfQ.qr-vTeHr_TUNiqf46zUsDAOtNRT5BLu5IQ0bqEcNRUU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"currentPassword\": \"nouaParola456\",\r\n  \"newPassword\": \"password123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/profile/change-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"profile",
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/tasks citeste",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjAzODIyNywiZXhwIjoxNzQ2MDQxODI3fQ.3zMBtSkWfwq6b1OXfioDywR_zNpUUx4kDOb9bKXIioA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/tasks le pune",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjAzODIyNywiZXhwIjoxNzQ2MDQxODI3fQ.3zMBtSkWfwq6b1OXfioDywR_zNpUUx4kDOb9bKXIioA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Proiect Spring\",\r\n  \"description\": \"Finalizează partea de backend\",\r\n  \"label\": \"Important\",\r\n  \"dueDate\": \"2025-05-05\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/task dupa id, le modifica",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjAzODIyNywiZXhwIjoxNzQ2MDQxODI3fQ.3zMBtSkWfwq6b1OXfioDywR_zNpUUx4kDOb9bKXIioA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Proiect Spring Final\",\r\n  \"description\": \"Am terminat partea de backend\",\r\n  \"label\": \"Finalizat\",\r\n  \"dueDate\": \"2025-05-06\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/tasks/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/task dupa id, le sterge",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjAzODIyNywiZXhwIjoxNzQ2MDQxODI3fQ.3zMBtSkWfwq6b1OXfioDywR_zNpUUx4kDOb9bKXIioA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/tasks/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tasks",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/notes afiseaza continutul notitelor la acel id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjA0NjQ3NSwiZXhwIjoxNzQ2MDUwMDc1fQ.n7WHuKdSrftMwr7_IXZEVWbVBx-tIaRnm4KRzf1QQn8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/notes adauga notite cu increment id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjA0NjQ3NSwiZXhwIjoxNzQ2MDUwMDc1fQ.n7WHuKdSrftMwr7_IXZEVWbVBx-tIaRnm4KRzf1QQn8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Nota de test\",\r\n  \"content\": \"Aceasta este o notiță nouă.\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/notes/id modifica continutul notitelor in id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjA0NjQ3NSwiZXhwIjoxNzQ2MDUwMDc1fQ.n7WHuKdSrftMwr7_IXZEVWbVBx-tIaRnm4KRzf1QQn8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Nota modificată\",\r\n  \"content\": \"Conținutul a fost actualizat.\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/notes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"notes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/notes/id   le sterge dupa id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjA0NjQ3NSwiZXhwIjoxNzQ2MDUwMDc1fQ.n7WHuKdSrftMwr7_IXZEVWbVBx-tIaRnm4KRzf1QQn8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/notes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"notes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/orar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjUxMjczNywiZXhwIjoxNzQ2NTE2MzM3fQ.-ZABgdcg--AfSf86aAbyZJLgCIx2CdGZnChZIkF7tOM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/orar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/orar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjUxMjczNywiZXhwIjoxNzQ2NTE2MzM3fQ.-ZABgdcg--AfSf86aAbyZJLgCIx2CdGZnChZIkF7tOM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"titlu\": \"Ingineria Programării\",\r\n  \"descriere\": \"Curs + laborator\",\r\n  \"locatie\": \"Sala 201\",\r\n  \"data\": \"2025-05-09\",\r\n  \"ora\": \"08:00\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/orar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/orar/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjUxMjczNywiZXhwIjoxNzQ2NTE2MzM3fQ.-ZABgdcg--AfSf86aAbyZJLgCIx2CdGZnChZIkF7tOM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"titlu\": \"Ingineria Programării - Modificat\",\r\n  \"descriere\": \"Doar curs\",\r\n  \"locatie\": \"Online\",\r\n  \"data\": \"2025-05-10\",\r\n  \"ora\": \"10:00\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/orar/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/api/orar/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyb2JlcnQiLCJyb2xlIjoiU1RVREVOVCIsImlhdCI6MTc0NjUxMjczNywiZXhwIjoxNzQ2NTE2MzM3fQ.-ZABgdcg--AfSf86aAbyZJLgCIx2CdGZnChZIkF7tOM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/orar/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

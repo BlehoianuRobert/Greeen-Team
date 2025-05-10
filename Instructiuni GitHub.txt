@@ -1,0 +1,75 @@
+💻 1. CUM FOLOSESTE FIECARE COLEG GIT(LOCAL)
+
+O singură dată – Instalare
+Descarcă și instalează Git:
+👉 https://git-scm.com/downloads
+
+Configurează numele și email-ul in terminal:
+
+git config --global user.name "Prenume Nume"
+git config --global user.email "emailul@tau.com"
+
+
+
+📦 2. PRIMA OARA: Clonează repository-ul
+În terminal (sau Git Bash), scrie:
+
+
+git clone https://github.com/USER/REPO-NAME.git
+
+Asta va copia codul în calculatorul tău într-un folder.
+
+
+🔄 3. INAINTE SA INCEPI LUCRU: SINCRONIZEAZA-TI CODUL
+În terminal (sau Git Bash), scrie:
+
+git checkout main
+git pull origin main
+
+Comenzile astea se asigură că ai ultima versiune de cod pe laptopul tău.
+
+
+🌿 4. CREEAZA UN BRANCH NOU(RAMURA):
+Asta te ajută să nu strici codul principal:
+
+În terminal (sau Git Bash), scrie:
+
+git checkout -b nume-functionalitate
+
+Exemplu: git checkout -b pagina-login
+
+
+💾 5. CUM SALVEZI MODIFICARILE
+Faci modificări în cod (de ex. în Visual Studio Code)
+
+Apoi în terminal scrii:
+
+git add .
+git commit -m "Am adăugat pagina de login"
+
+
+🚀 6. TRIMITE CODUL INAPOI PE GITHUB
+În terminal (sau Git Bash), scrie:
+
+git push origin nume-functionalitate
+
+
+📬 7. DESCHIDE UN PULLREQUEST
+Mergi pe GitHub, în repository
+
+GitHub îți va arăta un banner cu:
+
+"You recently pushed a branch" → click pe "Compare & pull request"
+
+Scrie ce ai lucrat și dă click pe "Create pull request"
+
+Alt coleg poate verifica ce ai făcut și apoi aproba ➤ codul intră în main.
+
+
+❗ 8. EVITAREA GRESELILOR FRECVENTE
+
+Greșeală:				Cum o eviți:
+Lucrezi direct pe main		->	Folosește mereu git checkout -b nume-branch
+Uiti să tragi codul nou		->	Fă git pull origin main înainte să începi
+Dai push pe branch greșit	->	Verifică cu git branch înainte de git push
+Conflicte de fișiere		->	Nu edita aceleași fișiere în paralel cu alți colegi
