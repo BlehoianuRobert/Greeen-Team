@@ -1,73 +1,60 @@
+// src/main/java/com/unitime/unitime/controller/OrarController.java
 package com.unitime.unitime.controller;
 
-import com.unitime.unitime.model.Orar;
-import com.unitime.unitime.model.User;
-import com.unitime.unitime.repository.OrarRepository;
-import com.unitime.unitime.repository.UserRepository;
+import com.unitime.unitime.dto.OrarRequest;
+import com.unitime.unitime.payload.OrarResponse;
+import com.unitime.unitime.service.OrarService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/orar")
 public class OrarController {
 
-    @Autowired
-    private OrarRepository orarRepository;
+    private final OrarService orarService;
 
     @Autowired
-    private UserRepository userRepository;
+    public OrarController(OrarService orarService) {
+        this.orarService = orarService;
+    }
 
     @GetMapping
-    public List<Orar> getAllOrar(Authentication authentication) {
-        String username = authentication.getName();
-        User user = userRepository.findByUsername(username).orElseThrow();
-        return orarRepository.findByUser(user);
+    public ResponseEntity<List<OrarResponse>> list(Authentication auth) {
+        List<OrarResponse> dtos = orarService.listResponses(auth.getName());
+        return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrarResponse> getOne(@PathVariable Long id, Authentication auth) {
+        OrarResponse dto = orarService.getResponse(auth.getName(), id);
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public Orar createOrar(@RequestBody Orar orar, Authentication authentication) {
-        String username = authentication.getName();
-        User user = userRepository.findByUsername(username).orElseThrow();
-        orar.setUser(user);
-        return orarRepository.save(orar);
+    public ResponseEntity<OrarResponse> create(@Valid @RequestBody OrarRequest req,
+                                               Authentication auth) {
+        OrarResponse created = orarService.createResponse(auth.getName(), req);
+        URI location = URI.create("/api/orar/" + created.getId());
+        return ResponseEntity.created(location).body(created);
     }
 
     @PutMapping("/{id}")
-    public Orar updateOrar(@PathVariable Long id,
-                           @RequestBody Orar orarDetails,
-                           Authentication authentication) {
-        String username = authentication.getName();
-        User user = userRepository.findByUsername(username).orElseThrow();
-
-        Orar orar = orarRepository.findById(id).orElseThrow();
-        if (!orar.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Not authorized");
-        }
-
-        orar.setTitlu(orarDetails.getTitlu());
-        orar.setDescriere(orarDetails.getDescriere());
-        orar.setLocatie(orarDetails.getLocatie());
-        orar.setData(orarDetails.getData());
-        orar.setOra(orarDetails.getOra());
-
-        return orarRepository.save(orar);
+    public ResponseEntity<OrarResponse> update(@PathVariable Long id,
+                                               @Valid @RequestBody OrarRequest req,
+                                               Authentication auth) {
+        OrarResponse updated = orarService.updateResponse(auth.getName(), id, req);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrar(@PathVariable Long id, Authentication authentication) {
-        String username = authentication.getName();
-        User user = userRepository.findByUsername(username).orElseThrow();
-
-        Orar orar = orarRepository.findById(id).orElseThrow();
-        if (!orar.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Not authorized");
-        }
-
-        orarRepository.delete(orar);
+    public ResponseEntity<Void> delete(@PathVariable Long id, Authentication auth) {
+        orarService.delete(auth.getName(), id);
+        return ResponseEntity.noContent().build();
     }
 }

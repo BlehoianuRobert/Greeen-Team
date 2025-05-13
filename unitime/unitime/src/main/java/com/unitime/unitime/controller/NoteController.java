@@ -1,80 +1,60 @@
-// controller/NoteController.java
+// src/main/java/com/unitime/unitime/controller/NoteController.java
 package com.unitime.unitime.controller;
 
-import com.unitime.unitime.model.Note;
-import com.unitime.unitime.model.User;
-import com.unitime.unitime.repository.NoteRepository;
-import com.unitime.unitime.repository.UserRepository;
+import com.unitime.unitime.dto.NoteRequest;
+import com.unitime.unitime.payload.NoteResponse;
+import com.unitime.unitime.service.NoteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.http.HttpStatus;
 
-import java.time.LocalDateTime;
+import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/notes")
 public class NoteController {
 
-    @Autowired
-    private NoteRepository noteRepository;
+    private final NoteService noteService;
 
     @Autowired
-    private UserRepository userRepository;
+    public NoteController(NoteService noteService) {
+        this.noteService = noteService;
+    }
 
     @GetMapping
-    public List<Note> getUserNotes(Authentication authentication) {
-        String username = authentication.getName();
-        User user = userRepository.findByUsername(username).orElseThrow();
-        return noteRepository.findByUser(user);
+    public ResponseEntity<List<NoteResponse>> list(Authentication auth) {
+        List<NoteResponse> dtos = noteService.listResponses(auth.getName());
+        return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<NoteResponse> getOne(@PathVariable Long id, Authentication auth) {
+        NoteResponse dto = noteService.getResponse(auth.getName(), id);
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public Note createNote(@RequestBody Note noteRequest, Authentication authentication) {
-        String username = authentication.getName();
-        User user = userRepository.findByUsername(username).orElseThrow();
-
-        Note note = new Note();
-        note.setTitle(noteRequest.getTitle());
-        note.setContent(noteRequest.getContent());
-        note.setUser(user);
-        note.setCreatedAt(LocalDateTime.now());
-        note.setUpdatedAt(LocalDateTime.now());
-
-        return noteRepository.save(note);
+    public ResponseEntity<NoteResponse> create(@Valid @RequestBody NoteRequest req,
+                                               Authentication auth) {
+        NoteResponse created = noteService.createResponse(auth.getName(), req);
+        URI location = URI.create("/api/notes/" + created.getId());
+        return ResponseEntity.created(location).body(created);
     }
 
     @PutMapping("/{id}")
-    public Note updateNote(@PathVariable Long id, @RequestBody Note noteRequest, Authentication authentication) {
-        String username = authentication.getName();
-        User user = userRepository.findByUsername(username).orElseThrow();
-
-        Note note = noteRepository.findById(id).orElseThrow();
-        if (!note.getUser().getId().equals(user.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized");
-        }
-
-        note.setTitle(noteRequest.getTitle());
-        note.setContent(noteRequest.getContent());
-        note.setUpdatedAt(LocalDateTime.now());
-
-        return noteRepository.save(note);
+    public ResponseEntity<NoteResponse> update(@PathVariable Long id,
+                                               @Valid @RequestBody NoteRequest req,
+                                               Authentication auth) {
+        NoteResponse updated = noteService.updateResponse(auth.getName(), id, req);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteNote(@PathVariable Long id, Authentication authentication) {
-        String username = authentication.getName();
-        User user = userRepository.findByUsername(username).orElseThrow();
-
-        Note note = noteRepository.findById(id).orElseThrow();
-        if (!note.getUser().getId().equals(user.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized");
-        }
-
-        noteRepository.delete(note);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Void> delete(@PathVariable Long id, Authentication auth) {
+        noteService.delete(auth.getName(), id);
+        return ResponseEntity.noContent().build();
     }
 }
