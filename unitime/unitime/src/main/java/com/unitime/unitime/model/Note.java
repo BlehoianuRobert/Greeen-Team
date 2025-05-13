@@ -1,4 +1,3 @@
-// model/Note.java
 package com.unitime.unitime.model;
 
 import jakarta.persistence.*;

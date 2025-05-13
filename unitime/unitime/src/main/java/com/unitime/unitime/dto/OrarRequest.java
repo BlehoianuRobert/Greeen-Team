@@ -1,4 +1,3 @@
-// src/main/java/com/unitime/unitime/dto/OrarRequest.java
 package com.unitime.unitime.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -25,7 +24,6 @@ public class OrarRequest {
     @JsonFormat(pattern = "HH:mm")
     private LocalTime ora;
 
-    // getters & setters
     public String getTitlu() {
         return titlu;
     }

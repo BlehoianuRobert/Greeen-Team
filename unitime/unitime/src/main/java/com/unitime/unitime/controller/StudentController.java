@@ -1,15 +1,25 @@
 package com.unitime.unitime.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.unitime.unitime.payload.ApiResponse;
+import com.unitime.unitime.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/student")
 public class StudentController {
 
+    private final StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
     @GetMapping
-    public String studentHome() {
-        return "Welcome, student!";
+    public ResponseEntity<ApiResponse> home() {
+        ApiResponse resp = studentService.getHome();
+        return ResponseEntity.ok(resp);
     }
 }

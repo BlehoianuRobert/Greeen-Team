@@ -1,4 +1,3 @@
-// src/main/java/com/unitime/unitime/service/AuthService.java
 package com.unitime.unitime.service;
 
 import com.unitime.unitime.dto.LoginRequest;
@@ -48,14 +47,12 @@ public class AuthService {
     }
 
     public ApiResponse register(RegisterRequest req) {
-        // 1) Validări de unicitate
         if (userRepository.existsByUsername(req.getUsername())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is already taken!");
         }
         if (userRepository.existsByEmail(req.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is already in use!");
         }
-        // 2) Validare email / role
         String role = req.getRole().toUpperCase();
         boolean validEmail = switch (role) {
             case "STUDENT"   -> req.getEmail().endsWith("@student.unitbv.ro");
@@ -67,11 +64,9 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Invalid institutional email for role: " + role);
         }
-        // 3) Creare user
         User user = new User(req.getUsername(), req.getEmail(), req.getPassword(), role);
         userService.saveUser(user);
-        // 4) Generare token şi email
-        String token = tokenService.generateToken(req.getEmail(), 1000L*60*60);
+        String token = tokenService.generateToken(req.getEmail());
         String link = ngrokService.getPublicUrl() + "/api/auth/confirm?token=" + token;
         emailService.sendEmail(req.getEmail(),
                 "Confirm your UniTime Account",
@@ -92,7 +87,6 @@ public class AuthService {
     }
 
     public UserInfoResponse authenticate(LoginRequest req) {
-        // 1) Authenticate
         Authentication authentication;
         try {
             authentication = authenticationManager.authenticate(
@@ -106,9 +100,7 @@ public class AuthService {
         }
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // 2) Build response
         var principal = (com.unitime.unitime.security.UserDetailsImpl) authentication.getPrincipal();
-        // recuperăm User din DB
         var user = userService.findByUsername(principal.getUsername())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 

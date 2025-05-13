@@ -1,4 +1,3 @@
-// src/main/java/com/unitime/unitime/dto/NoteRequest.java
 package com.unitime.unitime.dto;
 
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +10,7 @@ public class NoteRequest {
     @NotBlank(message = "Content must not be blank")
     private String content;
 
-    // getters & setters
+
     public String getTitle() {
         return title;
     }

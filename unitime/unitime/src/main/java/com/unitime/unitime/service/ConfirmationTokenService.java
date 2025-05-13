@@ -2,54 +2,54 @@ package com.unitime.unitime.service;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
 @Service
 public class ConfirmationTokenService {
 
-    private static final String SECRET_KEY = "confirm-email-secret-key-1234567890"; // Separate key
+    @Value("${confirmation.token.secret}")
+    private String secret;
 
-    private Key getSignInKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    @Value("${confirmation.token.expiration-ms}")
+    private long expirationMs;
+
+    private Key signingKey;
+    private JwtParser parser;
+
+    @PostConstruct
+    public void init() {
+        signingKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        parser = Jwts.parserBuilder()
+                .setSigningKey(signingKey)
+                .build();
     }
 
-    public String generateToken(String email, long expirationMs) {
+    public String generateToken(String email) {
+        Date now = new Date();
         return Jwts.builder()
                 .setSubject(email)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + expirationMs))
+                .signWith(signingKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public String extractEmail(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        return parser.parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean isTokenValid(String token) {
         try {
-            extractEmail(token);
-            return !isTokenExpired(token);
+            Claims claims = parser.parseClaimsJws(token).getBody();
+            return !claims.getExpiration().before(new Date());
         } catch (JwtException e) {
             return false;
         }
-    }
-
-    private boolean isTokenExpired(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getExpiration()
-                .before(new Date());
     }
 }

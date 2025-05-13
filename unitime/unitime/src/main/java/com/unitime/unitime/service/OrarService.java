@@ -1,4 +1,3 @@
-// src/main/java/com/unitime/unitime/service/OrarService.java
 package com.unitime.unitime.service;
 
 import com.unitime.unitime.dto.OrarRequest;
@@ -84,7 +83,6 @@ public class OrarService {
         orarRepository.delete(o);
     }
 
-    // --- DTO mapping methods ---
     public List<OrarResponse> listResponses(String username) {
         return list(username).stream()
                 .map(o -> new OrarResponse(

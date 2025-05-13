@@ -1,4 +1,3 @@
-// src/main/java/com/unitime/unitime/service/NoteService.java
 package com.unitime.unitime.service;
 
 import com.unitime.unitime.dto.NoteRequest;
@@ -81,8 +80,6 @@ public class NoteService {
         }
         noteRepository.delete(n);
     }
-
-    // --- DTO mapping methods ---
     public List<NoteResponse> listResponses(String username) {
         return list(username).stream()
                 .map(n -> new NoteResponse(

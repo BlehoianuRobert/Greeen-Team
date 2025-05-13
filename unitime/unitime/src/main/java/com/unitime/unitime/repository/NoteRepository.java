@@ -1,4 +1,3 @@
-// repository/NoteRepository.java
 package com.unitime.unitime.repository;
 
 import com.unitime.unitime.model.Note;

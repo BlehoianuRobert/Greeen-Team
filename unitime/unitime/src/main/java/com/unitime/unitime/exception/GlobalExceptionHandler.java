@@ -1,4 +1,3 @@
-// src/main/java/com/unitime/unitime/exception/GlobalExceptionHandler.java
 package com.unitime.unitime.exception;
 
 import com.unitime.unitime.payload.ApiResponse;
@@ -16,7 +15,6 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // 1) Validation errors (@Valid)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse> handleValidation(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -27,7 +25,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(resp);
     }
 
-    // 2) Service‐thrown ResponseStatusException
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ApiResponse> handleResponseStatus(ResponseStatusException ex) {
         ApiResponse resp = new ApiResponse(ex.getReason());
@@ -36,13 +33,10 @@ public class GlobalExceptionHandler {
                 .body(resp);
     }
 
-    // 3) Fallback pentru orice altă excepție
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleAll(Exception ex) {
-        // 1) log the exception
         ex.printStackTrace();
 
-        // 2) return a real "success":false
         ApiResponse resp = new ApiResponse("An unexpected error occurred: " + ex.getMessage());
         resp.setSuccess(false);
         return ResponseEntity

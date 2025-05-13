@@ -10,7 +10,6 @@ public class TaskRequest {
     @JsonFormat(pattern = "yyyy-MM-dd")  // pentru a parsa corect datele trimise de input[type=date]
     private LocalDate dueDate;
 
-    // getters & setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 

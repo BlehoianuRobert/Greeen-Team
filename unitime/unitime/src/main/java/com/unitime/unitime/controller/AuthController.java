@@ -1,4 +1,3 @@
-// src/main/java/com/unitime/unitime/controller/AuthController.java
 package com.unitime.unitime.controller;
 
 import com.unitime.unitime.dto.LoginRequest;

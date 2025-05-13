@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/tasks/**", "/api/notes/**", "/api/orar/**").authenticated()
                         .anyRequest().authenticated()
                 )
-                // re-enable frames for the H2 console:
+
                 .headers(headers -> headers
                         .frameOptions(frame -> frame.sameOrigin())
                 )

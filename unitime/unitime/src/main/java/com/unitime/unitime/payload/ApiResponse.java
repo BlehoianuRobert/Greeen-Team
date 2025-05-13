@@ -9,14 +9,12 @@ public class ApiResponse {
     private boolean success;
     private Map<String, String> errors;
 
-    // Constructor for success response
     public ApiResponse(String message) {
         this.message = message;
         this.success = true;
         this.errors = new HashMap<>();
     }
 
-    // Constructor for error response
     public ApiResponse(String message, Map<String, String> errors) {
         this.message = message;
         this.success = false;

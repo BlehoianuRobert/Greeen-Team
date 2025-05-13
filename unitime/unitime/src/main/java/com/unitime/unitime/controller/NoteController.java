@@ -1,4 +1,3 @@
-// src/main/java/com/unitime/unitime/controller/NoteController.java
 package com.unitime.unitime.controller;
 
 import com.unitime.unitime.dto.NoteRequest;
