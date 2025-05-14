@@ -1,23 +1,15 @@
 // src/services/api.ts
 import axios from 'axios'
 
-const token = () => localStorage.getItem('token')
-
 export const api = axios.create({
-  baseURL: '/api',
-  headers: {
-    'Content-Type': 'application/json'
-  }
+  baseURL: import.meta.env.VITE_API_BASE_URL,  // e.g. http://localhost:8080/api
 })
 
-// Adaugă interceptor pentru a pune automat header-ul Authorization
+// 👉 before every request, inject the bearer token if present
 api.interceptors.request.use(config => {
-  const t = token()
-  if (t) {
-    config.headers = {
-      ...config.headers,
-      Authorization: `Bearer ${t}`
-    }
+  const token = localStorage.getItem('token')
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`
   }
   return config
 })

@@ -1,13 +1,464 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="/vite.svg" />
+  <script src="http://localhost:8097"></script>
+  <title>Pagină de Login - Albastru</title>
+
+  <!-- Inlined Styles -->
+  <style>
+    /* 1. Reset & Base */
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    }
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      background: #000; /* fallback */
+    }
+
+    /* 2. Background Gradient cu animație */
+    .background {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #0a2342 0%, #126e82 50%, #5643cc 100%);
+      background-size: 300% 300%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 3. Stars îmbunătățite */
+    .stars { position: absolute; width: 100%; height: 100%; }
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite alternate;
+    }
+
+    /* 4. Clouds cu blur mai frumos */
+    .clouds { position: absolute; width: 100%; height: 100%; }
+    .cloud {
+      position: absolute;
+      background-color: rgba(0,20,50,0.2);
+      border-radius: 50%;
+      filter: blur(30px);
+    }
+
+    /* 5. Login Form Container modernizat */
+    .login-container {
+      background: rgba(13, 40, 70, 0.35);
+      backdrop-filter: blur(15px);
+      border-radius: 25px;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 48px 40px;
+      width: 420px; max-width: 92%;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      z-index: 10;
+      text-align: center;
+      transform: translateY(0);
+      transition: transform 0.4s ease-out, box-shadow 0.4s ease;
+    }
+
+    .login-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    /* 6. Login Title modernizat */
+    .login-title {
+      font-size: 2.4rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .login-subtitle {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 36px;
+      font-size: 0.95rem;
+    }
+
+    /* 7. Inputs cu efecte */
+    .input-group { 
+      margin-bottom: 25px; 
+      position: relative;
+    }
+    
+    .input-icon {
+      position: absolute;
+      left: 20px;
+      top: 14px;
+      color: rgba(255,255,255,0.6);
+      font-size: 18px;
+    }
+    
+    .input-field {
+      width: 100%;
+      padding: 15px 20px 15px 48px;
+      border-radius: 50px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      font-size: 16px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    
+    .input-field::placeholder { 
+      color: rgba(255,255,255,0.55); 
+    }
+    
+    .input-field:focus {
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(86, 67, 204, 0.7);
+      box-shadow: 0 0 15px rgba(86, 67, 204, 0.3);
+    }
+
+    /* 8. Remember & Forgot modernizat */
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      margin-top: -5px;
+    }
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.9rem;
+    }
+    
+    .remember-me input { 
+      margin-right: 8px; 
+      accent-color: #5643cc;
+      cursor: pointer;
+    }
+    
+    .forgot-password {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      position: relative;
+    }
+    
+    .forgot-password:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      bottom: -2px;
+      left: 0;
+      background-color: white;
+      transition: width 0.3s ease;
+    }
+    
+    .forgot-password:hover:after {
+      width: 100%;
+    }
+
+    /* 9. Login Button modernizat */
+    .login-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(45deg, #3d65db, #5643cc);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 28px;
+      box-shadow: 0 5px 15px rgba(86, 67, 204, 0.4);
+    }
+    
+    .login-btn:hover { 
+      background: linear-gradient(45deg, #4d75eb, #6653dc);
+      box-shadow: 0 7px 20px rgba(86, 67, 204, 0.5);
+      transform: translateY(-2px);
+    }
+    
+    .login-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 3px 10px rgba(86, 67, 204, 0.4);
+    }
+
+    /* 10. Register Link modernizat */
+    .register-link {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+    }
+    
+    .register-link a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 5px;
+      position: relative;
+    }
+    
+    .register-link a:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      bottom: -2px;
+      left: 0;
+      background-color: white;
+      transition: width 0.3s ease;
+    }
+    
+    .register-link a:hover:after {
+      width: 100%;
+    }
+
+    /* 11. Twinkle Animation */
+    @keyframes twinkle {
+      0% { opacity: 0.2; }
+      50% { transform: scale(1.2); }
+      100% { opacity: 0.9; }
+    }
+    
+    /* 12. Social Login buttons */
+    .social-login {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 28px;
+    }
+    
+    .social-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .social-btn:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-3px);
+    }
+    
+    .social-icon {
+      color: white;
+      font-size: 20px;
+    }
+    
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+    }
+    
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+    }
+    
+    .divider::before {
+      margin-right: 15px;
+    }
+    
+    .divider::after {
+      margin-left: 15px;
+    }
+    
+    /* 13. Loading effect */
+    @keyframes shimmer {
+      0% {
+        background-position: -468px 0;
+      }
+      100% {
+        background-position: 468px 0;
+      }
+    }
+    
+    .loading .input-field, 
+    .loading .login-btn {
+      background: linear-gradient(to right, rgba(255,255,255,0.05) 8%, rgba(255,255,255,0.15) 18%, rgba(255,255,255,0.05) 33%);
+      background-size: 800px 104px;
+      animation: shimmer 2s infinite linear;
+    }
+  </style>
+  <!-- Font Awesome pentru iconițe -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Font Poppins de la Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+</head>
+
+<body>
+  <!-- React root -->
+  <div id="root">
+    <!-- Login Container -->
+    <div class="login-container">
+      <h1 class="login-title">Bine ai venit</h1>
+      <p class="login-subtitle">Conectează-te la contul tău pentru a continua</p>
+
+      <!-- Social Login -->
+      <div class="social-login">
+        <div class="social-btn">
+          <i class="fab fa-google social-icon"></i>
+        </div>
+        <div class="social-btn">
+          <i class="fab fa-facebook-f social-icon"></i>
+        </div>
+        <div class="social-btn">
+          <i class="fab fa-apple social-icon"></i>
+        </div>
+      </div>
+
+      <div class="divider">sau folosește email</div>
+
+      <!-- Login Form -->
+      <form>
+        <div class="input-group">
+          <i class="fas fa-envelope input-icon"></i>
+          <input type="email" class="input-field" placeholder="Email" required>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock input-icon"></i>
+          <input type="password" class="input-field" placeholder="Parolă" required>
+        </div>
+        
+        <div class="remember-forgot">
+          <label class="remember-me">
+            <input type="checkbox">
+            Ține-mă minte
+          </label>
+          <a href="#" class="forgot-password">Ai uitat parola?</a>
+        </div>
+        
+        <button type="submit" class="login-btn">Conectare</button>
+        
+        <div class="register-link">
+          Nu ai cont?<a href="#">Înregistrează-te</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Star & Cloud Background Script -->
+  <script>
+    function createStars() {
+      const container = document.getElementById('stars');
+      for (let i = 0; i < 150; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        const size = Math.random() * 2.5 + 0.5;
+        const opacity = Math.random() * 0.8 + 0.2;
+        const duration = Math.random() * 4 + 2;
+        const delay = Math.random() * 5;
+        star.style.cssText = `
+          left: ${x}%;
+          top: ${y}%;
+          width: ${size}px;
+          height: ${size}px;
+          opacity: ${opacity};
+          animation: twinkle ${duration}s infinite alternate;
+          animation-delay: ${delay}s;
+        `;
+        container.appendChild(star);
+      }
+    }
+
+    function createClouds() {
+      const container = document.getElementById('clouds');
+      for (let i = 0; i < 12; i++) {
+        const cloud = document.createElement('div');
+        cloud.className = 'cloud';
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        const width = Math.random() * 400 + 100;
+        const height = Math.random() * 150 + 50;
+        const opacity = Math.random() * 0.2 + 0.05;
+        cloud.style.cssText = `
+          left: ${x}%;
+          top: ${y}%;
+          width: ${width}px;
+          height: ${height}px;
+          opacity: ${opacity};
+        `;
+        container.appendChild(cloud);
+      }
+    }
+
+    window.addEventListener('load', () => {
+      // Inject background containers
+      const bg = document.createElement('div');
+      bg.className = 'background';
+      bg.innerHTML = `
+        <div class="stars" id="stars"></div>
+        <div class="clouds" id="clouds"></div>
+      `;
+      document.body.prepend(bg);
+
+      // Populate stars & clouds
+      createStars();
+      createClouds();
+      
+      // Form focus effect
+      const inputFields = document.querySelectorAll('.input-field');
+      inputFields.forEach(input => {
+        input.addEventListener('focus', () => {
+          input.parentElement.classList.add('focused');
+        });
+        input.addEventListener('blur', () => {
+          if (!input.value) {
+            input.parentElement.classList.remove('focused');
+          }
+        });
+      });
+      
+      // Login button animation
+      const loginBtn = document.querySelector('.login-btn');
+      loginBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginBtn.textContent = 'Se conectează...';
+        document.querySelector('.login-container').classList.add('loading');
+        
+        setTimeout(() => {
+          loginBtn.textContent = 'Conectare';
+          document.querySelector('.login-container').classList.remove('loading');
+        }, 2000);
+      });
+    });
+  </script>
+
+  <!-- Vite entrypoint for React -->
+  <script type="module" src="/src/main.tsx"></script>
+ 
+</body>
 </html>

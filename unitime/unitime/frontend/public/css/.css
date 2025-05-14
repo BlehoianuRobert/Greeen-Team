@@ -1,0 +1,164 @@
+/* public/css/style.css */
+
+/* 1. Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 2. Background Gradient */
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(135deg, #0a2342 0%, #126e82 50%, #5643cc 100%);
+}
+
+/* 3. Stars */
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite alternate;
+}
+
+/* 4. Clouds */
+.clouds {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.cloud {
+  position: absolute;
+  background-color: rgba(0, 20, 50, 0.3);
+  border-radius: 50%;
+  filter: blur(15px);
+}
+
+/* 5. Login Form Container */
+.login-container {
+  background: rgba(22, 55, 90, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  text-align: center;
+}
+
+/* 6. Login Title */
+.login-title {
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 40px;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* 7. Inputs */
+.input-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+.input-field {
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+.input-field::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+.input-field:focus {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* 8. Remember & Forgot */
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.remember-me {
+  display: flex;
+  align-items: center;
+  color: white;
+}
+.remember-me input {
+  margin-right: 8px;
+}
+.forgot-password {
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* 9. Login Button */
+.login-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 50px;
+  background-color: #e6e6e6;
+  color: #154c79;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 25px;
+}
+.login-btn:hover {
+  background-color: white;
+}
+
+/* 10. Register Link */
+.register-link {
+  color: white;
+  font-size: 14px;
+}
+.register-link a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 5px;
+}
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+/* 11. Twinkle Animation */
+@keyframes twinkle {
+  0% { opacity: 0.2; }
+  100% { opacity: 1; }
+}

@@ -1,0 +1,318 @@
+openapi: 3.0.0
+info:
+  title: UniTime API Collection
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+components:
+  securitySchemes:
+    noauthAuth:
+      type: http
+      scheme: noauth
+    bearerAuth:
+      type: http
+      scheme: bearer
+paths:
+  /api/auth/register:
+    post:
+      tags:
+        - default
+      summary: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: robertadmin
+                email: robert.blehoianu@unitbv.ro
+                password: password123
+                role: ADMIN
+      security:
+        - noauthAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/auth/login:
+    post:
+      tags:
+        - default
+      summary: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: robert
+                password: password123
+      security:
+        - noauthAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/admin:
+    get:
+      tags:
+        - default
+      summary: /admin sau /professor sau /student
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/profile:
+    get:
+      tags:
+        - default
+      summary: profile
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/profile/update:
+    put:
+      tags:
+        - default
+      summary: profile update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                newUsername: robert_updated
+                newEmail: robert.new@email.com
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/profile/change-password:
+    put:
+      tags:
+        - default
+      summary: profile/change password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                currentPassword: nouaParola456
+                newPassword: password123
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/tasks:
+    get:
+      tags:
+        - default
+      summary: /api/tasks citeste
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - default
+      summary: /api/tasks le pune
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Proiect Spring
+                description: Finalizeaz─â partea de backend
+                label: Important
+                dueDate: '2025-05-05'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/tasks/1:
+    put:
+      tags:
+        - default
+      summary: /api/task dupa id, le modifica
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Proiect Spring Final
+                description: Am terminat partea de backend
+                label: Finalizat
+                dueDate: '2025-05-06'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - default
+      summary: /api/task dupa id, le sterge
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/notes:
+    get:
+      tags:
+        - default
+      summary: /api/notes afiseaza continutul notitelor la acel id
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - default
+      summary: /api/notes adauga notite cu increment id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: Nota de test
+                content: Aceasta este o noti╚¢─â nou─â.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/notes/1:
+    put:
+      tags:
+        - default
+      summary: /api/notes/id modifica continutul notitelor in id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: Nota modificat─â
+                content: Con╚¢inutul a fost actualizat.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - default
+      summary: /api/notes/id   le sterge dupa id
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/orar:
+    get:
+      tags:
+        - default
+      summary: http://localhost:8080/api/orar
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - default
+      summary: http://localhost:8080/api/orar
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                titlu: Ingineria Program─ârii
+                descriere: Curs + laborator
+                locatie: Sala 201
+                data: '2025-05-09'
+                ora: '08:00'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/orar/1:
+    put:
+      tags:
+        - default
+      summary: http://localhost:8080/api/orar/1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                titlu: Ingineria Program─ârii - Modificat
+                descriere: Doar curs
+                locatie: Online
+                data: '2025-05-10'
+                ora: '10:00'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - default
+      summary: http://localhost:8080/api/orar/1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+
